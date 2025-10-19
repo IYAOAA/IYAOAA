@@ -92,8 +92,7 @@
 
 <script>
   const postsPerPage = 6;
-  const urlParams = new URLSearchParams(window.location.search);
-  let currentPage = parseInt(urlParams.get('page')) || 1;
+  let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
 
   fetch('data/posts.json')
     .then(res => res.json())
@@ -142,18 +141,15 @@
       function changePage(page) {
         if (page < 1 || page > totalPages) return;
         currentPage = page;
-        window.history.pushState({}, '', `?page=${currentPage}`);
+        localStorage.setItem('currentPage', currentPage);
         renderPosts(currentPage);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // ✅ Wait till posts are ready, then load correct page from URL
       renderPosts(currentPage);
     })
     .catch(err => console.error('Error loading posts:', err));
 </script>
-
-
 
  </section>
   <!-- sidebar -->
