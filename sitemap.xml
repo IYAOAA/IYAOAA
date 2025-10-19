@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://iyaoaa.netlify.app/index.html</loc>
-  </url>
-  <url>
-    <loc>https://iyaoaa.netlify.app/index.html</loc>
-  </url>
-  <url>
-    <loc>https://iyaoaa.netlify.app/page2.html</loc>
-  </url>
+  <url><loc>https://iyaoaa.netlify.app/about.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/admin.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/archive.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/contact.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/index.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/post.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/How-to-Back-Up-Your-Phone-Data-to-the-Cloud.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/How-to-Remove-Malware-from-Your-PC-Without-Extra-Software.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/How-to-Stop-Windows-Update-in-2-Minutes.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/How-to-Troubleshoot-a-Printer-That-Won’t-Print.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/post2.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/post3.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/post4.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/post5.html</loc></url>
+  <url><loc>https://iyaoaa.netlify.app/latest-post/post6.html</loc></url>
 </urlset>

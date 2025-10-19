@@ -6,3 +6,12 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# --- Auto Sitemap Plugin ---
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
+
+  [plugins.inputs]
+    buildDir = "."
+    prettyURLs = true
+    trailingSlash = false
