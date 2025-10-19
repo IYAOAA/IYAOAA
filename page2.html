@@ -90,9 +90,7 @@
   <div id="posts-container" class="post-grid">
     <article class="post">
       <img src="images/browsers.png" alt="How to Clear Cache and Cookies on Any Web Browser" class="post-image">
-      <h2 class="post-title">
-        <a href="post.html?id=undefined">How to Clear Cache and Cookies on Any Web Browser</a>
-      </h2>
+      <h2 class="post-title"><a href="post.html?id=undefined">How to Clear Cache and Cookies on Any Web Browser</a></h2>
       <p class="post-meta">Posted on Invalid Date • by Ibrahim</p>
       <p class="post-excerpt">Learn how to clear cache and cookies to fix website issues and speed up your browser.</p>
       <div class="post-tags">
@@ -103,9 +101,7 @@
   
     <article class="post">
       <img src="images/Windows-update.png" alt="How to Stop Windows Update (3 Easy Ways)" class="post-image">
-      <h2 class="post-title">
-        <a href="post.html?id=undefined">How to Stop Windows Update (3 Easy Ways)</a>
-      </h2>
+      <h2 class="post-title"><a href="post.html?id=undefined">How to Stop Windows Update (3 Easy Ways)</a></h2>
       <p class="post-meta">Posted on Invalid Date • by Ibrahim</p>
       <p class="post-excerpt">Windows Updates can interrupt your work — here’s how to pause or stop them easily.</p>
       <div class="post-tags">
@@ -117,62 +113,24 @@
 </section>
 
 <script>
-  const postsPerPage = 6;
-  let currentPage = parseInt(localStorage.getItem('currentPage')) || 1;
-
   fetch('data/posts.json')
     .then(res => res.json())
     .then(posts => {
       const container = document.getElementById('posts-container');
-      const pagination = document.createElement('div');
-      pagination.className = 'pagination';
-      container.insertAdjacentElement('afterend', pagination);
-
-      const totalPages = Math.ceil(posts.length / postsPerPage);
-
-      function renderPosts(page) {
-        const start = (page - 1) * postsPerPage;
-        const end = start + postsPerPage;
-        const paginatedPosts = posts.slice(start, end);
-
-        container.innerHTML = paginatedPosts.map(post => `
-          <article class="post">
-            <img src="${post.image}" alt="${post.title}" class="post-image">
-            <h2 class="post-title">
-              <a href="post.html?id=${post.id}">${post.title}</a>
-            </h2>
-            <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
-            <p class="post-excerpt">${post.summary}</p>
-            <div class="post-tags">
-              ${post.categories.map(cat => `<a href="#">${cat}</a>`).join(' ')}
-            </div>
-            <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
-          </article>
-        `).join('');
-
-        renderPagination();
-      }
-
-      function renderPagination() {
-        pagination.innerHTML = `
-          <button ${currentPage === 1 ? 'disabled' : ''} id="prevPage">← Previous</button>
-          <span>Page ${currentPage} of ${totalPages}</span>
-          <button ${currentPage === totalPages ? 'disabled' : ''} id="nextPage">Next →</button>
-        `;
-
-        document.getElementById('prevPage').addEventListener('click', () => changePage(currentPage - 1));
-        document.getElementById('nextPage').addEventListener('click', () => changePage(currentPage + 1));
-      }
-
-      function changePage(page) {
-        if (page < 1 || page > totalPages) return;
-        currentPage = page;
-        localStorage.setItem('currentPage', currentPage);
-        renderPosts(currentPage);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      renderPosts(currentPage);
+      container.innerHTML = posts.map(post => `
+        <article class="post">
+          <img src="${post.image}" alt="${post.title}" class="post-image">
+          <h2 class="post-title">
+            <a href="post.html?id=${post.id}">${post.title}</a>
+          </h2>
+          <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
+          <p class="post-excerpt">${post.summary}</p>
+          <div class="post-tags">
+            ${post.categories.map(cat => `<a href="#">${cat}</a>`).join(' ')}
+          </div>
+          <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
+        </article>
+      `).join('');
     })
     .catch(err => console.error('Error loading posts:', err));
 </script>
@@ -426,7 +384,7 @@ fetchPopularPosts();
   <button type="submit" id="subscribeBtn">Subscribe</button>
 </form>
   </aside>
-<div class="pagination"><a href="page1.html" class="prev">← Previous</a></div></main>
+<div class="pagination"><a href="index.html" class="prev">← Previous</a></div></main>
 
 <hr>
 <footer>

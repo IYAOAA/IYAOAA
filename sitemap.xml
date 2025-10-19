@@ -1,32 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
-    <loc>https://iyaoaa.netlify.app/</loc>
-    <lastmod>2025-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <loc>https://iyaoaa.netlify.app/index.html</loc>
   </url>
-
   <url>
-    <loc>https://iyaoaa.netlify.app/about.html</loc>
-    <lastmod>2025-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://iyaoaa.netlify.app/index.html</loc>
   </url>
-
   <url>
-    <loc>https://iyaoaa.netlify.app/contact.html</loc>
-    <lastmod>2025-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://iyaoaa.netlify.app/page2.html</loc>
   </url>
-
-  <url>
-    <loc>https://iyaoaa.netlify.app/posts/stop-windows-update.html</loc>
-    <lastmod>2025-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
 </urlset>
