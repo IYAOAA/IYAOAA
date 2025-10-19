@@ -3,15 +3,11 @@
   publish = "."
 
 [[redirects]]
+from = "/sitemap.xml"
+to = "/sitemap.xml"
+status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-# --- Auto Sitemap Plugin ---
-[[plugins]]
-  package = "@netlify/plugin-sitemap"
-
-  [plugins.inputs]
-    buildDir = "."
-    prettyURLs = true
-    trailingSlash = false
