@@ -14,7 +14,7 @@ const totalPages = Math.ceil(posts.length / postsPerPage);
 // Load template
 const template = fs.readFileSync(templateFile, 'utf8');
 
-// Array to keep track of generated pages for sitemap
+// Array to track generated pages for sitemap
 let pagesForSitemap = ['index.html'];
 
 // Generate pages
@@ -42,9 +42,10 @@ for (let page = 1; page <= totalPages; page++) {
   if (page > 1) paginationHTML += `<a href="${page === 2 ? 'index.html' : 'page' + (page - 1) + '.html'}" class="prev">← Previous</a>`;
   if (page < totalPages) paginationHTML += `<a href="page${page + 1}.html" class="next">Next →</a>`;
 
-  // Inject posts and pagination into template
+  // Inject posts into template safely
+  const containerRegex = /<div id="posts-container" class="post-grid">.*?<\/div>/s;
   const finalHTML = template
-    .replace('<div id="posts-container" class="post-grid"></div>', `<div id="posts-container" class="post-grid">${postsHTML}</div>`)
+    .replace(containerRegex, `<div id="posts-container" class="post-grid">${postsHTML}</div>`)
     .replace('</main>', `<div class="pagination">${paginationHTML}</div></main>`);
 
   // Decide filename
