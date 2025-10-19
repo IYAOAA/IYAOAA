@@ -91,24 +91,71 @@
 </section>
 
 <script>
+  const postsPerPage = 6;
+  let currentPage = 1;
+
   fetch('data/posts.json')
     .then(res => res.json())
     .then(posts => {
       const container = document.getElementById('posts-container');
-      container.innerHTML = posts.map(post => `
-        <article class="post">
-          <img src="${post.image}" alt="${post.title}" class="post-image">
-          <h2 class="post-title">
-            <a href="post.html?id=${post.id}">${post.title}</a>
-          </h2>
-          <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
-          <p class="post-excerpt">${post.summary}</p>
-          <div class="post-tags">
-            ${post.categories.map(cat => `<a href="#">${cat}</a>`).join(' ')}
-          </div>
-          <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
-        </article>
-      `).join('');
+      const pagination = document.createElement('div');
+      pagination.className = 'pagination';
+      container.insertAdjacentElement('afterend', pagination);
+
+      function renderPosts(page) {
+        container.innerHTML = '';
+        const start = (page - 1) * postsPerPage;
+        const end = start + postsPerPage;
+        const paginatedPosts = posts.slice(start, end);
+
+        container.innerHTML = paginatedPosts.map(post => `
+          <article class="post">
+            <img src="${post.image}" alt="${post.title}" class="post-image">
+            <h2 class="post-title">
+              <a href="post.html?id=${post.id}">${post.title}</a>
+            </h2>
+            <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
+            <p class="post-excerpt">${post.summary}</p>
+            <div class="post-tags">
+              ${post.categories.map(cat => `<a href="#">${cat}</a>`).join(' ')}
+            </div>
+            <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
+          </article>
+        `).join('');
+
+        renderPagination();
+      }
+
+      function renderPagination() {
+        const totalPages = Math.ceil(posts.length / postsPerPage);
+        pagination.innerHTML = `
+          <button ${currentPage === 1 ? 'disabled' : ''} id="prevPage">← Previous</button>
+          <span>Page ${currentPage} of ${totalPages}</span>
+          <button ${currentPage === totalPages ? 'disabled' : ''} id="nextPage">Next →</button>
+        `;
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+          if (currentPage > 1) {
+            currentPage--;
+            renderPosts(currentPage);
+            scrollToTop();
+          }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderPosts(currentPage);
+            scrollToTop();
+          }
+        });
+      }
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      renderPosts(currentPage);
     })
     .catch(err => console.error('Error loading posts:', err));
 </script>
