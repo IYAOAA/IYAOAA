@@ -104,7 +104,6 @@
       container.insertAdjacentElement('afterend', pagination);
 
       function renderPosts(page) {
-        container.innerHTML = '';
         const start = (page - 1) * postsPerPage;
         const end = start + postsPerPage;
         const paginatedPosts = posts.slice(start, end);
@@ -145,17 +144,15 @@
         currentPage = page;
         window.history.pushState({}, '', `?page=${currentPage}`);
         renderPosts(currentPage);
-        scrollToTop();
-      }
-
-      function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
+      // ✅ Render correct page on first load
       renderPosts(currentPage);
     })
     .catch(err => console.error('Error loading posts:', err));
 </script>
+
 
 
  </section>
