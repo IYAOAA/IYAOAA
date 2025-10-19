@@ -92,7 +92,8 @@
 
 <script>
   const postsPerPage = 6;
-  let currentPage = 1;
+  const urlParams = new URLSearchParams(window.location.search);
+  let currentPage = parseInt(urlParams.get('page')) || 1;
 
   fetch('data/posts.json')
     .then(res => res.json())
@@ -134,21 +135,17 @@
           <button ${currentPage === totalPages ? 'disabled' : ''} id="nextPage">Next →</button>
         `;
 
-        document.getElementById('prevPage').addEventListener('click', () => {
-          if (currentPage > 1) {
-            currentPage--;
-            renderPosts(currentPage);
-            scrollToTop();
-          }
-        });
+        document.getElementById('prevPage').addEventListener('click', () => changePage(currentPage - 1));
+        document.getElementById('nextPage').addEventListener('click', () => changePage(currentPage + 1));
+      }
 
-        document.getElementById('nextPage').addEventListener('click', () => {
-          if (currentPage < totalPages) {
-            currentPage++;
-            renderPosts(currentPage);
-            scrollToTop();
-          }
-        });
+      function changePage(page) {
+        const totalPages = Math.ceil(posts.length / postsPerPage);
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        window.history.pushState({}, '', `?page=${currentPage}`);
+        renderPosts(currentPage);
+        scrollToTop();
       }
 
       function scrollToTop() {
