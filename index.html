@@ -103,6 +103,8 @@
       pagination.className = 'pagination';
       container.insertAdjacentElement('afterend', pagination);
 
+      const totalPages = Math.ceil(posts.length / postsPerPage);
+
       function renderPosts(page) {
         const start = (page - 1) * postsPerPage;
         const end = start + postsPerPage;
@@ -127,7 +129,6 @@
       }
 
       function renderPagination() {
-        const totalPages = Math.ceil(posts.length / postsPerPage);
         pagination.innerHTML = `
           <button ${currentPage === 1 ? 'disabled' : ''} id="prevPage">← Previous</button>
           <span>Page ${currentPage} of ${totalPages}</span>
@@ -139,7 +140,6 @@
       }
 
       function changePage(page) {
-        const totalPages = Math.ceil(posts.length / postsPerPage);
         if (page < 1 || page > totalPages) return;
         currentPage = page;
         window.history.pushState({}, '', `?page=${currentPage}`);
@@ -147,7 +147,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // ✅ Render correct page on first load
+      // ✅ Wait till posts are ready, then load correct page from URL
       renderPosts(currentPage);
     })
     .catch(err => console.error('Error loading posts:', err));
