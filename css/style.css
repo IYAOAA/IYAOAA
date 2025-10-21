@@ -746,3 +746,27 @@ body.dark .search-box input {
   background: #ccc;
   cursor: not-allowed;
 }
+
+.explore-more {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+.explore-more h3 {
+  margin-bottom: 0.5rem;
+}
+.explore-more ul {
+  list-style: none;
+  padding: 0;
+}
+.explore-more li {
+  margin: 4px 0;
+}
+.explore-more a {
+  color: var(--primary, #012c4b);
+  text-decoration: none;
+}
+.explore-more a:hover {
+  text-decoration: underline;
+}
