@@ -1,4 +1,13 @@
 [
+     {
+    "title": "How to Free Up Space on Your iPhone or Android",
+    "slug": "Free Space",
+    "date": "2025-10-25",
+    "image": "images/Phone-Storage.png",
+    "summary": "Running out of storage on your phone is frustrating",
+    "content": "latest-post/How-to-Free-Up-Space-on-Your-iPhone-or-Android.html",
+    "categories": ["All", "Mobile"]
+  },
     {
     "title": "How to Remove Malware from Your PC Without Extra Software",
     "slug": "Remove Malware",
@@ -38,7 +47,7 @@
     "image": "images/android battery.jpg",
     "summary": "A phone that dies before the day is through, is one of the biggest annoyances too.",
     "content": "latest-post/post5.html",
-    "categories": ["Andriod", "All"]
+    "categories": ["Mobile", "All"]
   },
   {
     "title": "How to Reset a Forgotten Gmail Password",
