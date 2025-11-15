@@ -12,8 +12,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IYAOAA</title>
-
-  <script type="application/ld+json">
+  <!-- Structured Data (Schema Markup) -->
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Blog",
@@ -33,13 +33,13 @@
     "name": "Ibrahim"
   }
 }
-  </script>
-
+</script>
   <link rel="icon" type="image/png" href="favicon.png">
   <meta name="google-site-verification" content="z0pJCQWyJcGtCqUh3kEFcFP46mNgBiQuGeGZptPDBQY" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- Google Analytics (optional if you want GA separately) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QG0690CHE6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -47,110 +47,418 @@
     gtag('js', new Date());
     gtag('config', 'G-QG0690CHE6');
   </script>
-
-<style>
-#pagination {
-  text-align:center;
-  margin-top:30px;
-}
-#pagination a {
-  padding: 8px 15px;
-  margin: 4px;
-  background:#eee;
-  border-radius:6px;
-  text-decoration:none;
-}
-#pagination a.active {
-  background:black;
-  color:white;
-}
-</style>
-
 </head>
 <body>
-
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRTPW5V2"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRTPW5V2"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
 <header>
   <h1 class="logo"><a href="index.html">IYAOAA</a></h1>
-
+      <!-- Search Bar -->
 <div class="search-container">
   <input type="text" id="searchInput" placeholder="Search posts...">
 </div>
-
+<!-- Light/Dark Mode Toggle -->
 <div class="theme-toggle">
   <button id="themeBtn">🌙 Dark Mode</button>
 </div>
-
-<nav>
-  <a href="index.html">Home</a> |
-  <a href="about.html">About</a> |
-  <a href="contact.html">Contact</a> |
-  <a href="archive.html">Archive</a>
-</nav>
-<hr>
+ <nav>
+    <a href="index.html">Home</a> |
+    <a href="about.html">About</a> |
+    <a href="contact.html">Contact</a> |
+    <a href="archive.html">Archive</a>
+  </nav>
+  
+  <hr>
 </header>
 
+<!-- Hero Section -->
 <section class="hero">
   <h1>Welcome to IYAOAA</h1>
   <p>Clear, hands-on tech fixes & tips for everyday users</p>
-  <a href="#latest-posts" class="hero-btn">Start Reading</a>
+   <a href="#latest-posts" class="hero-btn">Start Reading</a>
 </section>
 
 <main class="layout">
-<section class="content">
+  <!-- main post area -->
+  <section class="content">
 
-<section id="latest-posts">
+    <section id="latest-posts">
   <h2>Latest Posts</h2>
   <div id="posts-container" class="post-grid"></div>
-  <div id="pagination"></div>
 </section>
 
 <script>
-let allPosts = [];
-const postsPerPage = 8;
-
-fetch('data/posts.json')
-.then(res => res.json())
-.then(posts => {
-  allPosts = posts;
-  loadPage();
-})
-.catch(err => console.error('Error loading posts:', err));
-
-function loadPage(page = 1) {
-  const start = (page - 1) * postsPerPage;
-  const end = start + postsPerPage;
-  const visible = allPosts.slice(start, end);
-
-  document.getElementById('posts-container').innerHTML = visible.map(post => `
-      <article class="post">
-        <img src="${post.image}" alt="${post.title}" class="post-image">
-        <h2 class="post-title">
-          <a href="post.html?id=${post.id}">${post.title}</a>
-        </h2>
-        <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
-        <p class="post-excerpt">${post.summary}</p>
-        <div class="post-tags">
-          ${post.categories.map(cat => `<a href="#">${cat}</a>`).join(' ')}
-        </div>
-        <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
-      </article>
-  `).join('');
-
-  renderPagination(page);
-}
-
-function renderPagination(activePage) {
-  const totalPages = Math.ceil(allPosts.length / postsPerPage);
-  const pagination = document.getElementById("pagination");
-
-  let html = "";
-  for (let i = 1; i <= totalPages; i++) {
-    html += `<a href="#" onclick="loadPage(${i})" class="${i === activePage ? 'active' : ''}">${i}</a>`;
-  }
-  pagination.innerHTML = html;
-}
+  fetch('data/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      const container = document.getElementById('posts-container');
+      container.innerHTML = posts.map(post => `
+        <article class="post">
+          <img src="${post.image}" alt="${post.title}" class="post-image">
+          <h2 class="post-title">
+            <a href="post.html?id=${post.id}">${post.title}</a>
+          </h2>
+          <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
+          <p class="post-excerpt">${post.summary}</p>
+          <div class="post-tags">
+            ${post.categories.map(cat => `<a href="#">${cat}</a>`).join(' ')}
+          </div>
+          <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
+        </article>
+      `).join('');
+    })
+    .catch(err => console.error('Error loading posts:', err));
 </script>
+
+
+ </section>
+  <!-- sidebar -->
+  <aside class="sidebar">
+    <h3>Categories</h3>
+<ul id="category-list" class="category-list"></ul>
+
+   <script>
+  // ===== Load Posts and Categories =====
+  fetch('data/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      allPosts = posts;
+      displayPosts(allPosts); // show all posts by default
+      loadCategories(allPosts); // build sidebar categories
+    })
+    .catch(err => console.error('Error loading posts:', err));
+
+  // ===== Display Posts =====
+  function displayPosts(posts) {
+    const container = document.getElementById('posts-container');
+    container.innerHTML = posts.map(post => `
+      <article class="post-card">
+        <img src="${post.image}" alt="${post.title}">
+        <h3><a href="${post.content}">${post.title}</a></h3>
+        <p>${post.summary}</p>
+        <small>${post.date}</small>
+      </article>
+    `).join('');
+  }
+
+  // ===== Load Categories =====
+  function loadCategories(posts) {
+    const allCategories = new Set();
+    posts.forEach(post => {
+      if (post.categories) {
+        post.categories.forEach(cat => allCategories.add(cat));
+      }
+    });
+
+    const list = document.getElementById('category-list');
+    // ✅ Add "All" + category list
+    list.innerHTML = `
+      <li><a href="#" class="category-link" data-category="all">All</a></li>
+    ` + Array.from(allCategories).map(cat => `
+      <li><a href="#" class="category-link" data-category="${cat}">${cat}</a></li>
+    `).join('');
+
+    // ✅ Add click listeners for filtering
+    document.querySelectorAll('.category-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const category = e.target.getAttribute('data-category');
+
+        if (category === 'all') {
+          displayPosts(allPosts);
+        } else {
+          const filtered = allPosts.filter(post => post.categories && post.categories.includes(category));
+          displayPosts(filtered);
+        }
+      });
+    });
+  }
+</script>
+
+
+<script>
+  let allPosts = [];
+
+  // Load posts from JSON
+  fetch('data/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      allPosts = posts;
+      displayPosts(allPosts); // show all initially
+      loadCategories(allPosts); // build sidebar categories
+    })
+    .catch(err => console.error('Error loading posts:', err));
+
+  // ===== Display Posts =====
+  function displayPosts(posts) {
+    const container = document.getElementById('posts-container');
+    container.innerHTML = posts.map(post => `
+      <article class="post-card">
+        <img src="${post.image}" alt="${post.title}">
+        <h3><a href="${post.content}">${post.title}</a></h3>
+        <p>${post.summary}</p>
+        <small>${post.date}</small>
+      </article>
+    `).join('');
+  }
+
+  // ===== Load Categories =====
+  function loadCategories(posts) {
+    const allCategories = new Set();
+    posts.forEach(post => {
+      if (post.categories) {
+        post.categories.forEach(cat => allCategories.add(cat));
+      }
+    });
+
+    const list = document.getElementById('category-list');
+    list.innerHTML = Array.from(allCategories).map(cat => `
+      <li><a href="#" class="category-link" data-category="${cat}">${cat}</a></li>
+    `).join('');
+
+    // Add click listeners
+    document.querySelectorAll('.category-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const category = e.target.getAttribute('data-category');
+        const filtered = allPosts.filter(post => post.categories && post.categories.includes(category));
+        displayPosts(filtered);
+      });
+    });
+  }
+</script>
+
+ <section class="popular-posts">
+  <h3>🔥 Popular Posts</h3>
+  <ul id="popular-posts-list" class="popular-list">
+    <li>Loading popular posts...</li>
+  </ul>
 </section>
+
+<style>
+.popular-list {
+  list-style: none;
+  padding: 0;
+}
+.popular-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.popular-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+.popular-list img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 6px;
+}
+.popular-list a {
+  color: var(--primary, #012c4b);
+  font-weight: 500;
+  text-decoration: none;
+  flex: 1;
+}
+.popular-list small {
+  color: #666;
+  font-size: 0.85rem;
+}
+</style>
+
+<script>
+const thumbnails = {
+  "/post1.html": "/images/post1-thumb.jpg",
+  "/post2.html": "/images/post2-thumb.jpg",
+  "/post3.html": "/images/post3-thumb.jpg",
+  "/post4.html": "/images/post4-thumb.jpg",
+  "/post5.html": "/images/post5-thumb.jpg"
+};
+
+async function fetchPopularPosts() {
+  try {
+    const response = await fetch("/.netlify/functions/popular-posts");
+    const data = await response.json();
+    const list = document.getElementById("popular-posts-list");
+    list.innerHTML = "";
+
+    if (data.rows) {
+      data.rows.forEach(row => {
+        const pagePath = row.dimensionValues[0].value;
+        const views = row.metricValues[0].value;
+
+        const li = document.createElement("li");
+        const thumb = thumbnails[pagePath] || "/images/default-thumb.jpg";
+        const title = pagePath.replace("/latest-post/", "").replace(".html", "").replace(/-/g, " ");
+
+        li.innerHTML = `
+          <img src="${thumb}" alt="${title}">
+          <div>
+            <a href="${pagePath}">${title}</a><br>
+            <small>${views} views</small>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    } else {
+      list.innerHTML = "<li>No data yet</li>";
+    }
+  } catch (error) {
+    console.error(error);
+    document.getElementById("popular-posts-list").innerHTML = "<li>Error loading posts</li>";
+  }
+}
+
+fetchPopularPosts();
+</script>
+
+    <!-- Search Bar -->
+    <div class="search-box">
+      <input type="text" placeholder="Search..." />
+      <button>Search</button>
+    </div>
+
+    <div class="about-me">
+      <img src="images/ibrahim.png" alt="Ibrahim" class="about-photo">
+      <h3>About Me</h3>
+      <p>Hi, I’m Ibrahim — the tech mind behind IYAOAA. I write clear, hands-on tips for fixing and speeding up your gadgets.</p>
+      <p><a href="about.html">Read more →</a></p>
+    </div>
+
+    <h3>Recent Posts</h3>
+<ul id="recent-posts" class="recent-posts"></ul>
+
+<script>
+  // Load latest 5 posts from posts.json
+  fetch('data/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      const recent = posts.slice(0, 5); // top 5
+      const list = document.getElementById('recent-posts');
+
+      list.innerHTML = recent.map(post => `
+        <li><a href="${post.content}">${post.title}</a></li>
+      `).join('');
+    })
+    .catch(err => console.error('Error loading recent posts:', err));
+</script>
+
+
+    <h3>Follow IYAOAA</h3>
+    <p>Get new tips straight to your inbox.</p>
+
+    <form name="subscribe" method="POST" data-netlify="true">
+  <input type="hidden" name="form-name" value="subscribe">
+  <input type="email" name="email" placeholder="Your email" required>
+  <button type="submit" id="subscribeBtn">Subscribe</button>
+</form>
+  </aside>
+</main>
+
+<hr>
+<section class="explore-more">
+  <h3>Explore More Posts</h3>
+  <ul>
+    <li><a href="/latest-post/post2.html">How to Make Your Android Phone Battery Last Longer</a></li>
+    <li><a href="/latest-post/post3.html">Fix Wi-Fi Not Connecting on Windows or Phones</a></li>
+    <li><a href="/latest-post/post4.html">How to Back Up Your Phone Data to the Cloud</a></li>
+    <li><a href="/latest-post/post5.html">How to Stop Windows Update in 2 Minutes</a></li>
+    <li><a href="/latest-post/post6.html">How to Troubleshoot a Printer That Won’t Print</a></li>
+    <li><a href="/latest-post/How-to-Remove-Malware-from-Your-PC-Without-Extra-Software.html">Remove Malware from Your PC Without Extra Software</a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>&copy; 2025 IYAOAA — All rights reserved.</p>
+</footer>
+
+<script>
+  // Simple search filter
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('keyup', function () {
+    const filter = searchInput.value.toLowerCase();
+    const posts = document.querySelectorAll('article'); 
+
+    posts.forEach(post => {
+      const text = post.innerText.toLowerCase();
+      post.style.display = text.includes(filter) ? '' : 'none';
+    });
+  });
+</script>
+
+<script>
+  // Theme toggle
+  const themeBtn = document.getElementById('themeBtn');
+  const body = document.body;
+
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+    themeBtn.textContent = '☀️ Light Mode';
+  }
+
+  themeBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    if (body.classList.contains('dark')) {
+      themeBtn.textContent = '☀️ Light Mode';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      themeBtn.textContent = '🌙 Dark Mode';
+      localStorage.setItem('theme', 'light');
+    }
+  });
+</script>
+
+<!-- Scroll to Top Button -->
+<button id="scrollTopBtn" title="Go to top">↑</button>
+<script>
+let scrollTopBtn = document.getElementById("scrollTopBtn");
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    scrollTopBtn.style.display = "block";
+  } else {
+    scrollTopBtn.style.display = "none";
+  }
+}
+scrollTopBtn.addEventListener("click", function() {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+});
+</script>
+
+<script>
+// ======= Popular Posts (Static/Fake Data for Now) =======
+
+// Example blog posts (will later be replaced with real analytics)
+const blogPosts = [
+  { title: "How to Fix Wi-Fi Not Connecting on Windows", views: 984, url: "wifi-fix.html" },
+  { title: "Speed Up Windows 11 Without Software", views: 876, url: "speed-up-windows11.html" },
+  { title: "Recover Deleted Files on PC", views: 764, url: "recover-deleted-files.html" },
+  { title: "Clear Cache & Cookies on Browsers", views: 532, url: "clear-cache.html" },
+  { title: "Reset a Forgotten Gmail Password", views: 409, url: "reset-gmail.html" }
+];
+
+// Sort and show top 3
+const popularPosts = blogPosts.sort((a, b) => b.views - a.views).slice(0, 3);
+
+const list = document.getElementById('popular-posts');
+list.innerHTML = '';
+
+popularPosts.forEach(post => {
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="${post.url}">${post.title}</a> <span class="views">(${post.views} views)</span>`;
+  list.appendChild(li);
+});
+</script>
+
+</body>
+</html>
