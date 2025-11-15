@@ -47,26 +47,6 @@
     gtag('js', new Date());
     gtag('config', 'G-QG0690CHE6');
   </script>
-
-  <style>
-  /* small pagination styles (keeps visual minimal and won't conflict) */
-  #pagination {
-    text-align:center;
-    margin-top:30px;
-  }
-  #pagination a {
-    padding: 8px 12px;
-    margin: 4px;
-    background:#eee;
-    border-radius:6px;
-    text-decoration:none;
-    display:inline-block;
-  }
-  #pagination a.active {
-    background:#000;
-    color:#fff;
-  }
-  </style>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -108,108 +88,29 @@
     <section id="latest-posts">
   <h2>Latest Posts</h2>
   <div id="posts-container" class="post-grid"></div>
-  <!-- pagination controls for the main posts area -->
-  <div id="pagination"></div>
 </section>
 
 <script>
-  /**
-   * Paginated main-posts loader.
-   * Uses a separate variable (mainPosts) so it does not interfere with sidebar scripts
-   * that rely on `allPosts`.
-   */
-  let mainPosts = [];
-  const POSTS_PER_PAGE = 8;
-
-  // Read the page query param if present: ?page=2
-  function getPageFromUrl() {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const p = parseInt(params.get('page'));
-      return (isNaN(p) || p < 1) ? 1 : p;
-    } catch (e) {
-      return 1;
-    }
-  }
-
-  // Load posts.json for the main area
   fetch('data/posts.json')
     .then(res => res.json())
     .then(posts => {
-      mainPosts = posts || [];
-      const initialPage = getPageFromUrl();
-      loadMainPage(initialPage);
+      const container = document.getElementById('posts-container');
+      container.innerHTML = posts.map(post => `
+        <article class="post">
+          <img src="${post.image}" alt="${post.title}" class="post-image">
+          <h2 class="post-title">
+            <a href="post.html?id=${post.id}">${post.title}</a>
+          </h2>
+          <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
+          <p class="post-excerpt">${post.summary}</p>
+          <div class="post-tags">
+            ${post.categories.map(cat => `<a href="#">${cat}</a>`).join(' ')}
+          </div>
+          <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
+        </article>
+      `).join('');
     })
-    .catch(err => console.error('Error loading posts (main area):', err));
-
-  function loadMainPage(page = 1) {
-    const startIndex = (page - 1) * POSTS_PER_PAGE;
-    const endIndex = startIndex + POSTS_PER_PAGE;
-    const visible = mainPosts.slice(startIndex, endIndex);
-
-    const container = document.getElementById('posts-container');
-    container.innerHTML = visible.map(post => `
-      <article class="post">
-        <img src="${post.image}" alt="${escapeHtml(post.title)}" class="post-image">
-        <h2 class="post-title">
-          <a href="post.html?id=${post.id}">${escapeHtml(post.title)}</a>
-        </h2>
-        <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
-        <p class="post-excerpt">${escapeHtml(post.summary)}</p>
-        <div class="post-tags">
-          ${(post.categories || []).map(cat => `<a href="#">${escapeHtml(cat)}</a>`).join(' ')}
-        </div>
-        <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
-      </article>
-    `).join('');
-
-    renderMainPagination(page);
-    // update URL (without reloading) to reflect current page
-    updateUrlPageParam(page);
-  }
-
-  function renderMainPagination(activePage) {
-    const totalPages = Math.ceil(mainPosts.length / POSTS_PER_PAGE) || 1;
-    const pagination = document.getElementById('pagination');
-    let html = '';
-
-    // optional: show Prev
-    if (activePage > 1) {
-      html += `<a href="#" onclick="loadMainPage(${activePage - 1}); return false;">◀ Prev</a>`;
-    }
-
-    for (let i = 1; i <= totalPages; i++) {
-      html += `<a href="#" onclick="loadMainPage(${i}); return false;" class="${i === activePage ? 'active' : ''}">${i}</a>`;
-    }
-
-    // optional: show Next
-    if (activePage < totalPages) {
-      html += `<a href="#" onclick="loadMainPage(${activePage + 1}); return false;">Next ▶</a>`;
-    }
-
-    pagination.innerHTML = html;
-  }
-
-  function updateUrlPageParam(page) {
-    try {
-      const url = new URL(window.location);
-      url.searchParams.set('page', page);
-      window.history.replaceState({}, '', url);
-    } catch (e) {
-      // ignore if URL API not available
-    }
-  }
-
-  // small helper to avoid injecting raw content (basic escaping)
-  function escapeHtml(str) {
-    if (!str && str !== 0) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
+    .catch(err => console.error('Error loading posts:', err));
 </script>
 
 
@@ -545,7 +446,6 @@ const blogPosts = [
   { title: "Clear Cache & Cookies on Browsers", views: 532, url: "clear-cache.html" },
   { title: "Reset a Forgotten Gmail Password", views: 409, url: "reset-gmail.html" }
 ];
-
 
 // Sort and show top 3
 const popularPosts = blogPosts.sort((a, b) => b.views - a.views).slice(0, 3);
