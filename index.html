@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,36 +14,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IYAOAA</title>
-
   <!-- Structured Data (Schema Markup) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Blog",
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "IYAOAA",
+  "url": "https://iyaoaa.netlify.app/",
+  "description": "Clear, hands-on tech fixes & tips for everyday users.",
+  "publisher": {
+    "@type": "Organization",
     "name": "IYAOAA",
-    "url": "https://iyaoaa.netlify.app/",
-    "description": "Clear, hands-on tech fixes & tips for everyday users.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "IYAOAA",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://iyaoaa.netlify.app/favicon.png"
-      }
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Ibrahim"
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://iyaoaa.netlify.app/favicon.png"
     }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Ibrahim"
   }
-  </script>
-
+}
+</script>
   <link rel="icon" type="image/png" href="favicon.png">
   <meta name="google-site-verification" content="z0pJCQWyJcGtCqUh3kEFcFP46mNgBiQuGeGZptPDBQY" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Google Analytics -->
+  <!-- Google Analytics (optional if you want GA separately) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QG0690CHE6"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -49,24 +49,6 @@
     gtag('js', new Date());
     gtag('config', 'G-QG0690CHE6');
   </script>
-
-  <style>
-    /* Mobile grid: 2 posts per row */
-    @media (max-width: 768px) {
-      .post-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-    }
-    @media (min-width: 769px) {
-      .post-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-      }
-    }
-  </style>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -76,18 +58,15 @@
 
 <header>
   <h1 class="logo"><a href="index.html">IYAOAA</a></h1>
-
-  <!-- Search Bar -->
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search posts...">
-  </div>
-
-  <!-- Light/Dark Mode Toggle -->
-  <div class="theme-toggle">
-    <button id="themeBtn">🌙 Dark Mode</button>
-  </div>
-
-  <nav>
+      <!-- Search Bar -->
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search posts...">
+</div>
+<!-- Light/Dark Mode Toggle -->
+<div class="theme-toggle">
+  <button id="themeBtn">🌙 Dark Mode</button>
+</div>
+ <nav>
     <a href="index.html">Home</a> |
     <a href="about.html">About</a> |
     <a href="contact.html">Contact</a> |
@@ -101,31 +80,251 @@
 <section class="hero">
   <h1>Welcome to IYAOAA</h1>
   <p>Clear, hands-on tech fixes & tips for everyday users</p>
-  <a href="#latest-posts" class="hero-btn">Start Reading</a>
+   <a href="#latest-posts" class="hero-btn">Start Reading</a>
 </section>
 
 <main class="layout">
   <!-- main post area -->
   <section class="content">
-    <section id="latest-posts">
-      <h2>Latest Posts</h2>
-      <div id="posts-container" class="post-grid"></div>
-    </section>
-  </section>
 
+    <section id="latest-posts">
+  <h2>Latest Posts</h2>
+  <div id="posts-container" class="post-grid"></div>
+</section>
+
+<script>
+  fetch('data/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      const container = document.getElementById('posts-container');
+      container.innerHTML = posts.map(post => `
+        <article class="post">
+          <img src="${post.image}" alt="${post.title}" class="post-image">
+          <h2 class="post-title">
+            <a href="post.html?id=${post.id}">${post.title}</a>
+          </h2>
+          <p class="post-meta">Posted on ${new Date(post.date).toDateString()} • by Ibrahim</p>
+          <p class="post-excerpt">${post.summary}</p>
+          <div class="post-tags">
+            ${post.categories.map(cat => `<a href="#">${cat}</a>`).join(' ')}
+          </div>
+          <a href="post.html?id=${post.id}" class="read-more">Read more →</a>
+        </article>
+      `).join('');
+    })
+    .catch(err => console.error('Error loading posts:', err));
+</script>
+
+
+ </section>
   <!-- sidebar -->
   <aside class="sidebar">
     <h3>Categories</h3>
-    <ul id="category-list" class="category-list"></ul>
+<ul id="category-list" class="category-list"></ul>
 
-    <section class="popular-posts">
-      <h3>🔥 Popular Posts</h3>
-      <ul id="popular-posts-list" class="popular-list">
-        <li>Loading popular posts...</li>
-      </ul>
-    </section>
+   <script>
+  // ===== Load Posts and Categories =====
+  fetch('data/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      allPosts = posts;
+      displayPosts(allPosts); // show all posts by default
+      loadCategories(allPosts); // build sidebar categories
+    })
+    .catch(err => console.error('Error loading posts:', err));
 
-    <!-- Search Box -->
+  // ===== Display Posts =====
+  function displayPosts(posts) {
+    const container = document.getElementById('posts-container');
+    container.innerHTML = posts.map(post => `
+      <article class="post-card">
+        <img src="${post.image}" alt="${post.title}">
+        <h3><a href="${post.content}">${post.title}</a></h3>
+        <p>${post.summary}</p>
+        <small>${post.date}</small>
+      </article>
+    `).join('');
+  }
+
+  // ===== Load Categories =====
+  function loadCategories(posts) {
+    const allCategories = new Set();
+    posts.forEach(post => {
+      if (post.categories) {
+        post.categories.forEach(cat => allCategories.add(cat));
+      }
+    });
+
+    const list = document.getElementById('category-list');
+    // ✅ Add "All" + category list
+    list.innerHTML = `
+      <li><a href="#" class="category-link" data-category="all">All</a></li>
+    ` + Array.from(allCategories).map(cat => `
+      <li><a href="#" class="category-link" data-category="${cat}">${cat}</a></li>
+    `).join('');
+
+    // ✅ Add click listeners for filtering
+    document.querySelectorAll('.category-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const category = e.target.getAttribute('data-category');
+
+        if (category === 'all') {
+          displayPosts(allPosts);
+        } else {
+          const filtered = allPosts.filter(post => post.categories && post.categories.includes(category));
+          displayPosts(filtered);
+        }
+      });
+    });
+  }
+</script>
+
+
+<script>
+  let allPosts = [];
+
+  // Load posts from JSON
+  fetch('data/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      allPosts = posts;
+      displayPosts(allPosts); // show all initially
+      loadCategories(allPosts); // build sidebar categories
+    })
+    .catch(err => console.error('Error loading posts:', err));
+
+  // ===== Display Posts =====
+  function displayPosts(posts) {
+    const container = document.getElementById('posts-container');
+    container.innerHTML = posts.map(post => `
+      <article class="post-card">
+        <img src="${post.image}" alt="${post.title}">
+        <h3><a href="${post.content}">${post.title}</a></h3>
+        <p>${post.summary}</p>
+        <small>${post.date}</small>
+      </article>
+    `).join('');
+  }
+
+  // ===== Load Categories =====
+  function loadCategories(posts) {
+    const allCategories = new Set();
+    posts.forEach(post => {
+      if (post.categories) {
+        post.categories.forEach(cat => allCategories.add(cat));
+      }
+    });
+
+    const list = document.getElementById('category-list');
+    list.innerHTML = Array.from(allCategories).map(cat => `
+      <li><a href="#" class="category-link" data-category="${cat}">${cat}</a></li>
+    `).join('');
+
+    // Add click listeners
+    document.querySelectorAll('.category-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const category = e.target.getAttribute('data-category');
+        const filtered = allPosts.filter(post => post.categories && post.categories.includes(category));
+        displayPosts(filtered);
+      });
+    });
+  }
+</script>
+
+ <section class="popular-posts">
+  <h3>🔥 Popular Posts</h3>
+  <ul id="popular-posts-list" class="popular-list">
+    <li>Loading popular posts...</li>
+  </ul>
+</section>
+
+<style>
+.popular-list {
+  list-style: none;
+  padding: 0;
+}
+.popular-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.popular-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+.popular-list img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 6px;
+}
+.popular-list a {
+  color: var(--primary, #012c4b);
+  font-weight: 500;
+  text-decoration: none;
+  flex: 1;
+}
+.popular-list small {
+  color: #666;
+  font-size: 0.85rem;
+}
+</style>
+
+<script>
+const thumbnails = {
+  "/post1.html": "/images/post1-thumb.jpg",
+  "/post2.html": "/images/post2-thumb.jpg",
+  "/post3.html": "/images/post3-thumb.jpg",
+  "/post4.html": "/images/post4-thumb.jpg",
+  "/post5.html": "/images/post5-thumb.jpg"
+};
+
+async function fetchPopularPosts() {
+  try {
+    const response = await fetch("/.netlify/functions/popular-posts");
+    const data = await response.json();
+    const list = document.getElementById("popular-posts-list");
+    list.innerHTML = "";
+
+    if (data.rows) {
+      data.rows.forEach(row => {
+        const pagePath = row.dimensionValues[0].value;
+        const views = row.metricValues[0].value;
+
+        const li = document.createElement("li");
+        const thumb = thumbnails[pagePath] || "/images/default-thumb.jpg";
+        const title = pagePath.replace("/latest-post/", "").replace(".html", "").replace(/-/g, " ");
+
+        li.innerHTML = `
+          <img src="${thumb}" alt="${title}">
+          <div>
+            <a href="${pagePath}">${title}</a><br>
+            <small>${views} views</small>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    } else {
+      list.innerHTML = "<li>No data yet</li>";
+    }
+  } catch (error) {
+    console.error(error);
+    document.getElementById("popular-posts-list").innerHTML = "<li>Error loading posts</li>";
+  }
+}
+
+fetchPopularPosts();
+</script>
+
+    <!-- Search Bar -->
     <div class="search-box">
       <input type="text" placeholder="Search..." />
       <button>Search</button>
@@ -139,15 +338,32 @@
     </div>
 
     <h3>Recent Posts</h3>
-    <ul id="recent-posts" class="recent-posts"></ul>
+<ul id="recent-posts" class="recent-posts"></ul>
+
+<script>
+  // Load latest 5 posts from posts.json
+  fetch('data/posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      const recent = posts.slice(0, 5); // top 5
+      const list = document.getElementById('recent-posts');
+
+      list.innerHTML = recent.map(post => `
+        <li><a href="${post.content}">${post.title}</a></li>
+      `).join('');
+    })
+    .catch(err => console.error('Error loading recent posts:', err));
+</script>
+
 
     <h3>Follow IYAOAA</h3>
     <p>Get new tips straight to your inbox.</p>
+
     <form name="subscribe" method="POST" data-netlify="true">
-      <input type="hidden" name="form-name" value="subscribe">
-      <input type="email" name="email" placeholder="Your email" required>
-      <button type="submit" id="subscribeBtn">Subscribe</button>
-    </form>
+  <input type="hidden" name="form-name" value="subscribe">
+  <input type="email" name="email" placeholder="Your email" required>
+  <button type="submit" id="subscribeBtn">Subscribe</button>
+</form>
   </aside>
 </main>
 
@@ -169,105 +385,82 @@
 </footer>
 
 <script>
-  // ====== Unified Post Handling ======
-  let allPosts = [];
-
-  async function loadPosts() {
-    try {
-      const res = await fetch('data/posts.json');
-      const posts = await res.json();
-      allPosts = posts;
-
-      displayPosts(posts);
-      loadCategories(posts);
-      loadRecentPosts(posts);
-    } catch (err) {
-      console.error('Error loading posts:', err);
-    }
-  }
-
-  function displayPosts(posts) {
-    const container = document.getElementById('posts-container');
-    container.innerHTML = posts.map(post => `
-      <article class="post-card">
-        <img src="${post.image}" alt="${post.title}">
-        <h3><a href="${post.content}">${post.title}</a></h3>
-        <p>${post.summary}</p>
-        <small>${post.date}</small>
-      </article>
-    `).join('');
-  }
-
-  function loadCategories(posts) {
-    const allCategories = new Set();
-    posts.forEach(post => post.categories?.forEach(cat => allCategories.add(cat)));
-    const list = document.getElementById('category-list');
-    list.innerHTML = `<li><a href="#" class="category-link" data-category="all">All</a></li>` +
-      Array.from(allCategories).map(cat => `<li><a href="#" class="category-link" data-category="${cat}">${cat}</a></li>`).join('');
-    
-    document.querySelectorAll('.category-link').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const cat = e.target.getAttribute('data-category');
-        displayPosts(cat === 'all' ? allPosts : allPosts.filter(p => p.categories?.includes(cat)));
-      });
-    });
-  }
-
-  function loadRecentPosts(posts) {
-    const recent = posts.slice(0,5);
-    const list = document.getElementById('recent-posts');
-    list.innerHTML = recent.map(post => `<li><a href="${post.content}">${post.title}</a></li>`).join('');
-  }
-
-  loadPosts();
-
-  // ===== Popular Posts Static Example =====
-  const blogPosts = [
-    { title: "How to Fix Wi-Fi Not Connecting on Windows", views: 984, url: "wifi-fix.html" },
-    { title: "Speed Up Windows 11 Without Software", views: 876, url: "speed-up-windows11.html" },
-    { title: "Recover Deleted Files on PC", views: 764, url: "recover-deleted-files.html" },
-    { title: "Clear Cache & Cookies on Browsers", views: 532, url: "clear-cache.html" },
-    { title: "Reset a Forgotten Gmail Password", views: 409, url: "reset-gmail.html" }
-  ];
-
-  const popularPosts = blogPosts.sort((a,b)=>b.views-a.views).slice(0,3);
-  const popularList = document.getElementById('popular-posts-list');
-  popularList.innerHTML = '';
-  popularPosts.forEach(post => {
-    const li = document.createElement('li');
-    li.innerHTML = `<a href="${post.url}">${post.title}</a> <span class="views">(${post.views} views)</span>`;
-    popularList.appendChild(li);
-  });
-
-  // ===== Search Filter =====
+  // Simple search filter
   const searchInput = document.getElementById('searchInput');
   searchInput.addEventListener('keyup', function () {
     const filter = searchInput.value.toLowerCase();
-    document.querySelectorAll('article').forEach(post => {
-      post.style.display = post.innerText.toLowerCase().includes(filter) ? '' : 'none';
+    const posts = document.querySelectorAll('article'); 
+
+    posts.forEach(post => {
+      const text = post.innerText.toLowerCase();
+      post.style.display = text.includes(filter) ? '' : 'none';
     });
   });
+</script>
 
-  // ===== Theme Toggle =====
+<script>
+  // Theme toggle
   const themeBtn = document.getElementById('themeBtn');
   const body = document.body;
-  if(localStorage.getItem('theme')==='dark'){body.classList.add('dark'); themeBtn.textContent='☀️ Light Mode';}
-  themeBtn.addEventListener('click', ()=>{
+
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+    themeBtn.textContent = '☀️ Light Mode';
+  }
+
+  themeBtn.addEventListener('click', () => {
     body.classList.toggle('dark');
-    if(body.classList.contains('dark')){
-      themeBtn.textContent='☀️ Light Mode';
-      localStorage.setItem('theme','dark');
+    if (body.classList.contains('dark')) {
+      themeBtn.textContent = '☀️ Light Mode';
+      localStorage.setItem('theme', 'dark');
     } else {
-      themeBtn.textContent='🌙 Dark Mode';
-      localStorage.setItem('theme','light');
+      themeBtn.textContent = '🌙 Dark Mode';
+      localStorage.setItem('theme', 'light');
     }
   });
-
-  // ===== Scroll to Top =====
-  const scrollTopBtn = document.getElementById("scrollTopBtn");
-  window.onscroll = function(){scrollTopBtn.style.display=(document.body.scrollTop>200||document.documentElement.scrollTop>200)?"block":"none";};
-  scrollTopBtn.addEventListener("click",()=>window.scrollTo({top:0,behavior:'smooth'}));
 </script>
+
+<!-- Scroll to Top Button -->
+<button id="scrollTopBtn" title="Go to top">↑</button>
+<script>
+let scrollTopBtn = document.getElementById("scrollTopBtn");
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    scrollTopBtn.style.display = "block";
+  } else {
+    scrollTopBtn.style.display = "none";
+  }
+}
+scrollTopBtn.addEventListener("click", function() {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+});
+</script>
+
+<script>
+// ======= Popular Posts (Static/Fake Data for Now) =======
+
+// Example blog posts (will later be replaced with real analytics)
+const blogPosts = [
+  { title: "How to Fix Wi-Fi Not Connecting on Windows", views: 984, url: "wifi-fix.html" },
+  { title: "Speed Up Windows 11 Without Software", views: 876, url: "speed-up-windows11.html" },
+  { title: "Recover Deleted Files on PC", views: 764, url: "recover-deleted-files.html" },
+  { title: "Clear Cache & Cookies on Browsers", views: 532, url: "clear-cache.html" },
+  { title: "Reset a Forgotten Gmail Password", views: 409, url: "reset-gmail.html" }
+];
+
+// Sort and show top 3
+const popularPosts = blogPosts.sort((a, b) => b.views - a.views).slice(0, 3);
+
+const list = document.getElementById('popular-posts');
+list.innerHTML = '';
+
+popularPosts.forEach(post => {
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="${post.url}">${post.title}</a> <span class="views">(${post.views} views)</span>`;
+  list.appendChild(li);
+});
+</script>
+
 </body>
 </html>
