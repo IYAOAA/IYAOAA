@@ -127,20 +127,36 @@
     let currentPage = parseInt(params.get('page')) || 1;
 
     // Load posts once
-    async function loadAll() {
-      try {
-        const res = await fetch('data/posts.json');
-        const posts = await res.json();
-        allPosts = posts;
-        filteredPosts = [...allPosts];
+   async function loadPosts() {
+  try {
+    const res = await fetch("http://localhost:5000/api/posts");
+    const posts = await res.json();
 
-        renderPage();
-        buildCategories(); // populate category list and listeners
-        populateRecentPosts();
-      } catch (err) {
-        console.error('Error loading posts:', err);
-      }
+    const container = document.querySelector(".posts-container");
+    container.innerHTML = ""; 
+
+    if (posts.length === 0) {
+      container.innerHTML = "<p>No posts published yet.</p>";
+      return;
     }
+
+    posts.forEach(post => {
+      container.innerHTML += `
+        <div class="post-card">
+          <img src="${post.image}" alt="${post.title}">
+          <h2>${post.title}</h2>
+          <p>${post.summary}</p>
+          <a href="post.html?id=${post.id}">Read More</a>
+        </div>
+      `;
+    });
+  } catch (error) {
+    console.error("Error loading posts:", error);
+  }
+}
+
+loadPosts();
+
 
     // Render the posts for the current page (uses post.content for links)
     function renderPage() {
