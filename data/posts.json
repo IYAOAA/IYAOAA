@@ -1,4 +1,13 @@
 [
+    {
+    "title": "Wi-Fi not Working",
+    "slug": "WiFi",
+    "date": "2025-12-07",
+    "image": "images/WiFi2.png",
+    "summary": "Step-by-Step Guide to Fix Weak or Dropping Internet at Home",
+    "content": "latest-post/Wi-Fi-Not-Working.html",
+    "categories": ["All"]
+  },
   {
     "title": "How to Fix a Slow Laptop",
     "slug": "Slow Laptop",
