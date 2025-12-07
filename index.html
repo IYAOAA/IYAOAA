@@ -132,7 +132,8 @@
     const res = await fetch("http://localhost:5000/api/posts");
     const posts = await res.json();
 
-    const container = document.querySelector(".posts-container");
+    const container = document.querySelector("#posts-container");
+
     container.innerHTML = ""; 
 
     if (posts.length === 0) {
@@ -289,6 +290,19 @@ loadPosts();
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
+async function loadAll() {
+  try {
+    const res = await fetch("/data/posts.json");
+    allPosts = await res.json();
+    filteredPosts = [...allPosts];
+
+    buildCategories();
+    renderPage();
+    populateRecentPosts();
+  } catch (err) {
+    console.error("Error loading posts:", err);
+  }
+}
 
     // Kick off
     loadAll();
