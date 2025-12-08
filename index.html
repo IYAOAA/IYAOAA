@@ -551,35 +551,6 @@ popularPosts.forEach(post => {
 </script>
 
 
-<script>
-(async function loadFooter() {
-  const containerId = 'footer-container';
-  const url = '/components/footer.html'; // absolute path from site root
-  const container = document.getElementById(containerId);
-
-  if (!container) {
-    console.warn('Footer container not found:', containerId);
-    return;
-  }
-
-  try {
-    const res = await fetch(url, {cache: "no-store"}); // no-store useful while testing
-    if (!res.ok) {
-      console.error('Footer fetch failed', res.status, url);
-      // optional graceful fallback:
-      // container.innerHTML = '<div style="padding:18px;color:#c00">Footer not available</div>';
-      return;
-    }
-    const html = await res.text();
-    // Insert HTML safely
-    container.insertAdjacentHTML('beforeend', html);
-  } catch (err) {
-    console.error('Error loading footer:', err);
-  }
-})();
-</script>
-
-<div id="footer-container"></div>
 <div id="footer-container"></div>
 
 <script>
