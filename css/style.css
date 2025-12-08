@@ -822,3 +822,7 @@ body.dark .search-box input {
   font-size: 14px;
   color: #9bb3d3;
 }
+.site-footer { background: #0b1b26; color: #cfe7ff; }
+.site-footer a { color: #9bd1ff; text-decoration: none; }
+.site-footer .footer-inner { display:flex; gap:16px; align-items:center; justify-content:space-between; }
+@media (max-width:760px){ .site-footer .footer-inner{flex-direction:column; text-align:center} }
