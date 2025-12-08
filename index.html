@@ -586,6 +586,19 @@ popularPosts.forEach(post => {
 </script>
 
 <div id="footer-container"></div>
+<div id="footer-container"></div>
+
+<script>
+(async function loadFooter() {
+  try {
+    const res = await fetch('/components/footer.html');
+    const html = await res.text();
+    document.getElementById('footer-container').innerHTML = html;
+  } catch (e) {
+    console.error('Footer failed to load', e);
+  }
+})();
+</script>
 
 </body>
 </html>
