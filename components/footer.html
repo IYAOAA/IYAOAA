@@ -1,16 +1,40 @@
-<footer class="site-footer">
-  <div class="footer-links">
-    <a href="/about.html">About</a>
-    <a href="/career">Careers</a>
-    <a href="/privacy.html">Privacy</a>
-    <a href="/contact.html">Contact</a>
+<!-- components/footer.html -->
+<footer class="site-footer" role="contentinfo" style="font-family:inherit">
+  <div class="footer-inner" style="max-width:1100px;margin:0 auto;padding:28px 18px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;background:transparent">
+    <div class="left" style="min-width:220px">
+      <strong>IYAOAA</strong><br>
+      <small style="color:#6b7280">Clear, hands-on tech fixes & tips</small>
+    </div>
+
+    <div class="links" style="display:flex;gap:16px;flex-wrap:wrap">
+      <a href="/about.html">About</a>
+      <a href="/careers.html">Careers</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+
+    <div class="social" style="display:flex;gap:10px;align-items:center">
+      <!-- Use SVGs or image icons in /icons/ for better quality -->
+      <a href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener">FB</a>
+      <a href="https://twitter.com" aria-label="X" target="_blank" rel="noopener">X</a>
+      <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener">IG</a>
+      <a href="mailto:hello@iyaoaa.netlify.app" aria-label="Email">✉</a>
+    </div>
   </div>
 
-  <div class="social-icons">
-    <a href="#"><img src="/icons/facebook.svg" alt="Facebook"></a>
-    <a href="#"><img src="/icons/twitter.svg" alt="Twitter"></a>
-    <a href="#"><img src="/icons/instagram.svg" alt="Instagram"></a>
+  <div style="text-align:center;color:#94a3b8;padding:8px 12px;background:transparent">
+    © <span id="footer-year"></span> IYAOAA — All rights reserved.
   </div>
 
-  <p class="copyright">© 2025 IYAOAA TECH</p>
+  <script>
+    // small inline script to update year (runs inside the injected footer)
+    try {
+      const yEl = document.getElementById('footer-year');
+      if (yEl) yEl.textContent = new Date().getFullYear();
+    } catch(e) { /* no-op */ }
+  </script>
+</footer>
+
+ <footer>
+  <p>&copy; 2025 IYAOAA — All rights reserved.</p>
 </footer>
