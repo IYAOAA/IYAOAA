@@ -826,3 +826,16 @@ body.dark .search-box input {
 .site-footer a { color: #9bd1ff; text-decoration: none; }
 .site-footer .footer-inner { display:flex; gap:16px; align-items:center; justify-content:space-between; }
 @media (max-width:760px){ .site-footer .footer-inner{flex-direction:column; text-align:center} }
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
