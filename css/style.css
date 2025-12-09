@@ -920,4 +920,34 @@ main {
   cursor: pointer;
 }
 
+/* GLOBAL PAGE WIDTH FIX */
+.page-wrapper {
+  max-width: 1200px;    /* Adjust to your taste: 1000, 1100, etc */
+  width: 100%;
+  margin: 0 auto;       /* Centers everything */
+  padding: 0 20px;      /* Prevents edge-touching on mobile */
+  box-sizing: border-box;
+}
+
+/* Fix the main layout (content + sidebar) */
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ensure nothing creates horizontal scroll */
+body {
+  overflow-x: hidden;
+}
+.content {
+  max-width: 780px;
+}
 
