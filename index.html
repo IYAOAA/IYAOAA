@@ -568,5 +568,17 @@ popularPosts.forEach(post => {
   document.getElementById("footer-year").textContent = new Date().getFullYear();
 </script>
 
+<div id="chatgpt-toggle">💬</div>
+
+<div id="chatgpt-box">
+  <div id="chatgpt-messages"></div>
+  <div class="chat-input-area">
+    <input id="chatgpt-input" type="text" placeholder="Type your question...">
+    <button id="chatgpt-send">Send</button>
+  </div>
+</div>
+
+<script src="/js/chatbot.js"></script>
+
 </body>
 </html>

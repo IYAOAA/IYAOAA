@@ -857,3 +857,65 @@ main {
 #footer-container {
   margin-top: auto;
 }
+
+/* Chat toggle button */
+#chatgpt-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0d6efd;
+  color: #fff;
+  padding: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 9999;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+/* Chatbox */
+#chatgpt-box {
+  width: 320px;
+  height: 420px;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+#chatgpt-box.open {
+  display: flex;
+}
+
+#chatgpt-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.chat-input-area {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+#chatgpt-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+#chatgpt-send {
+  background: #0d6efd;
+  color: #fff;
+  padding: 10px 14px;
+  border: none;
+  cursor: pointer;
+}
