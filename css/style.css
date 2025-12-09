@@ -920,4 +920,82 @@ main {
   cursor: pointer;
 }
 
+/* ---- POST CARD ---- */
+
+.post-card {
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: transform .25s ease, box-shadow .25s ease;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    width: 100%;
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+/* ---- IMAGE ---- */
+
+.post-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+/* ---- CONTENT ---- */
+
+.post-content {
+    padding: 18px 20px;
+    max-width: 100%;
+}
+
+.post-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+}
+
+.post-title a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.post-excerpt {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #475569;
+    margin-bottom: 16px;
+    overflow-wrap: break-word;
+}
+
+/* ---- META ---- */
+
+.post-meta {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    display: flex;
+    gap: 6px;
+}
+
+/* ---- GRID LAYOUT ---- */
+
+.post-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
 
