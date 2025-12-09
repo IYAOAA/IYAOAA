@@ -951,3 +951,39 @@ body {
   max-width: 780px;
 }
 
+.post-card {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.post-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.post-card h2,
+.post-card h3 {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+.post-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.post-card * {
+  max-width: 100%;
+}
+.post-list {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
